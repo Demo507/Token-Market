@@ -66,11 +66,18 @@ export function WalletProvider({ children }) {
   useEffect(() => { if (window.ethereum) attach(window.ethereum, false).catch(() => {}); }, [attach]);
 
   const connectInjected = async () => {
-    setError("");
-    try {
-      if (!window.ethereum) throw new Error("No browser wallet found. On a phone, use the "Open in the MetaMask app" button. On a computer, install the MetaMask extension.");
-      await attach(window.ethereum, true);
-    } catch (e) { setError(friendlyError(e)); }
+    //  CORRECTED EXAMPLE
+setError("");
+try {
+    if (!window.ethereum) {
+        throw new Error("No browser wallet found. On a phone, use MetaMask app browser.");
+    }
+    await attach(window.ethereum, true);
+} catch (e) {
+    setError(friendlyError(e));
+}
+
+
   };
 
   const disconnect = async () => { try { await s.raw?.disconnect?.(); } catch {} setS({ account: null, chainId: null, provider: null, signer: null, raw: null }); };
